@@ -1,0 +1,25 @@
+[package]
+name = "hampel_filter"
+version = "0.1.0"
+edition = "2024"
+description = "Hampel filter for outlier detection in streaming float data"
+authors = ["Radzivon Bartoshyk"]
+license = "BSD-3-Clause OR Apache-2.0"
+keywords = ["hampel", "outlier", "dsp", "filter", "median"]
+categories = ["algorithms", "science"]
+readme = "./README.md"
+documentation = "https://github.com/awxkee/hampel_filter"
+homepage = "https://github.com/awxkee/hampel_filter"
+repository = "https://github.com/awxkee/hampel_filter.git"
+exclude = ["*.jpg", "./assets/*", "*.png"]
+rust-version = "1.89.0"
+include = ["/src/", "/README.md", "/LICENSE.md", "/LICENSE-APACHE.md"]
+
+[dependencies]
+num-traits = "0.2.19"
+
+[package.metadata.docs.rs]
+# To build locally:
+# RUSTDOCFLAGS="--cfg docsrs" cargo +nightly doc --all-features --no-deps --open --manifest-path ./Cargo.toml
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
