@@ -32,3 +32,4 @@ mod median;
 mod quick_select;
 
 pub use hampel::HampelFilter;
+pub use iter::{HampelExt, HampelIter};
