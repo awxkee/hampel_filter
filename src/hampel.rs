@@ -76,14 +76,6 @@ where
         // partial windows produce unreliable medians
         if self.filled < WINDOW_SIZE {
             self.filled += 1;
-            // fill remaining slots with this sample
-            for i in self.filled..WINDOW_SIZE {
-                unsafe {
-                    *self
-                        .window
-                        .get_unchecked_mut((self.oldest + i) % WINDOW_SIZE) = x
-                };
-            }
         }
 
         self.working_array = self.window;
@@ -102,21 +94,25 @@ where
     }
 
     fn get_median(&mut self) -> T {
-        if WINDOW_SIZE == 3 {
-            median3(
-                self.working_array[0],
-                self.working_array[1],
-                self.working_array[2],
-            )
-        } else if WINDOW_SIZE == 4 {
-            median4(
-                self.working_array[0],
-                self.working_array[1],
-                self.working_array[2],
-                self.working_array[3],
-            )
+        if self.filled == WINDOW_SIZE {
+            if WINDOW_SIZE == 3 {
+                median3(
+                    self.working_array[0],
+                    self.working_array[1],
+                    self.working_array[2],
+                )
+            } else if WINDOW_SIZE == 4 {
+                median4(
+                    self.working_array[0],
+                    self.working_array[1],
+                    self.working_array[2],
+                    self.working_array[3],
+                )
+            } else {
+                quick_select(&mut self.working_array)
+            }
         } else {
-            quick_select(&mut self.working_array)
+            quick_select(&mut self.working_array[..self.filled])
         }
     }
 }
